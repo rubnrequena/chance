@@ -13,7 +13,7 @@ router.get('/chance', async function (req, res, next) {
     const result = data.data.filter(item => {
       if (item.fecSorteo.indexOf(` ${localTime}`) > -1) return true;
     })[0]
-    if (!result) return res.json({ error: 'no data' })
+     if (!result) return res.send('');
     res.json({
       ganador: result.codAnimalA,
       fecha: today,
@@ -30,9 +30,8 @@ router.get('/chance', async function (req, res, next) {
 function getTime(/** @type {string} */ time) {
   const regPattern = /\d{1,2}/;
   const regResult = regPattern.exec(time);
-  const localTime = regResult[0];
-  console.log(regResult);
-  if (regResult) return `${localTime}:00`;
+  const localTime = parseInt(regResult[0]);
+  if (regResult) return `${localTime.toString().padStart(2,"0")}:00`;
 }
 
 module.exports = router;

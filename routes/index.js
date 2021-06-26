@@ -6,7 +6,6 @@ var axios = require('axios')
 router.get('/chance', async function (req, res, next) {
   const { hora: time, fecha: today = new Date().toISOString().substr(0, 10) } = req.query;
   const localTime = getTime(time);
-  console.log(localTime)
   const localDate = today.toString().split("-").reverse().join("/")
   try {
     const data = await axios.get(`http://tuchance.com.ve/Home/FechaResul?fecha=${localDate}`)
@@ -16,8 +15,8 @@ router.get('/chance', async function (req, res, next) {
     if (!result) return res.json({ error: 'no data' })
     res.json({
       ganador: result.codAnimalA,
-      fecha: today,
-      hora: time,
+      fecha: localDate,
+      hora: localTime,
       sorteo: "chance"
     })
   } catch (e) {
@@ -31,7 +30,6 @@ function getTime(/** @type {string} */ time) {
   const regPattern = /\d{1,2}/;
   const regResult = regPattern.exec(time);
   const localTime = regResult[0];
-  console.log(regResult);
   if (regResult) return `${localTime}:00`;
 }
 

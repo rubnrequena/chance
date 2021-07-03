@@ -30,7 +30,7 @@ function getTime(/** @type {string} */ time) {
   const regPattern = /\d{1,2}/;
   const regResult = regPattern.exec(time);
   const localTime = parseInt(regResult[0]);
-  if (regResult) return `${localTime.toString().padStart(2, "0")}:00`;
+  if (regResult) return `${localTime.toString()}:00`;
 }
 
 module.exports = router;
